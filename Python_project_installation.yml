@@ -1,7 +1,7 @@
 - hosts: localhost
   gather_facts: false
-  # vars_files:
-  #    - vars.yml
+  vars_files:
+     - vars.yml
   become: True
   tasks:    
       - name: Install python3 & git package
@@ -13,7 +13,7 @@
 
       - name: Clone github repository
         git:
-         repo: 'https://github.com/anikpujan/Python-Demo.git'
+         repo: 'https://github.com/anikpujan/Python-Project.git'
          dest: /home/ec2-user/Python_Scraping_project
          update: no
 
@@ -25,31 +25,32 @@
           executable: pip3
 
       - name: Run the script command
-        shell: python3 /home/ec2-user/Python_Scraping_project/weather.py
+        shell: python3 /home/ec2-user/Python_Scraping_project/Bar_Lounge_Reviews.py
 
   
   
-  # tasks:
-    # - name: Install Python 
-    #   yum:
-    #     name: python3-pip
-    # #     state: present
-    # - name: Ensure boto and boto3 modules are installed
-    #   pip:
-    #     name: 
-    #       - boto3
-    #       - botocore
-    #     executable: pip3
+ 
+      - name: Install Python 
+        yum:
+         name: python3-pip
+         state: present
+      - name: Ensure boto and boto3 modules are installed
+        pip:
+         name: 
+          - boto
+          - boto3
+          - botocore
+         executable: pip3
                
-    # - name: Launch EC2 instance
-    #   ec2:
-    #      key_name: demo
+      - name: Launch EC2 instance
+        ec2:
+         key_name: demo
          
-    #      instance_type: t2.micro
-    #      image: ami-09934b230a2c41883
-    #      wait: true
-    #      region: ca-central-1
-    #   register: ec2
-    # - name: Print the process
-    #   debug: var=ec2
+         instance_type: t2.micro
+         image: ami-09934b230a2c41883
+         wait: true
+         region: ca-central-1
+        register: ec2
+      - name: Print the process
+        debug: var=ec2
     
