@@ -1,7 +1,7 @@
 - hosts: localhost
   gather_facts: false
-  vars_files:
-     - vars.yml
+#   vars_files:
+#      - vars.yml
   become: True
   tasks:    
       - name: Install python3 & git package
