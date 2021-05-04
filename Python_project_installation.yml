@@ -41,7 +41,7 @@
           - boto3
           - botocore
          executable: pip3
-      - name: Simple get operation
+      - name: Put csv file as object
         s3:
           bucket: mybucket
           object: bar_lounge.csv
