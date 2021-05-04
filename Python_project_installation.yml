@@ -41,16 +41,25 @@
           - boto3
           - botocore
          executable: pip3
+      - name: Simple get operation
+        s3:
+          bucket: mybucket
+          object: bar_lounge.csv
+          dest: bar_lounge.csv
+          mode: put
+          s3_url: "http://localhost:3000" 
                
-      - name: Launch EC2 instance
-        ec2:
-         key_name: demo
+      # - name: Launch EC2 instance
+      #   become: False
+      #   ec2:
+      #    key_name: awx
          
-         instance_type: t2.micro
-         image: ami-09934b230a2c41883
-         wait: true
-         region: ca-central-1
-        register: ec2
-      - name: Print the process
-        debug: var=ec2
+      #    instance_type: t2.micro
+      #    image: ami-05acd287111d7095a
+      #    wait: true
+      #    region: ca-central-1
+      #   register: ec2
+      # - name: Print the process
+      #   debug: var=ec2
+      
     
