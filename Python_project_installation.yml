@@ -1,7 +1,7 @@
 - hosts: localhost
   gather_facts: false
-#   vars_files:
-#      - vars.yml
+  # vars_files:
+  #    - vars.yml
   become: True
   tasks:    
       - name: Install python3 & git package
@@ -13,7 +13,7 @@
 
       - name: Clone github repository
         git:
-         repo: 'https://github.com/anikpujan/Python-Project.git'
+         repo: 'https://github.com/anikpujan/Python-Demo.git'
          dest: /home/ec2-user/Python_Scraping_project
          update: no
 
@@ -25,7 +25,8 @@
           executable: pip3
 
       - name: Run the script command
-        shell: python3 /home/ec2-user/Python_Scraping_project/Bar_Lounge_Reviews.py
+        become: true
+        shell: python3 /home/ec2-user/Python_Scraping_project/weather.py
 
   
   
@@ -41,16 +42,22 @@
           - boto3
           - botocore
          executable: pip3
-      - name: Put csv file as object
-        s3:
-          bucket: mybucket
-          object: bar_lounge.csv
-          dest: bar_lounge.csv
-          mode: put
-          s3_url: "http://localhost:3000" 
+      - name: Create Bucket
+        aws_s3:
+          bucket: aniks 
+          mode: create
+          permission: public-read-write
+      - name: Put CSV file in the bucket
+        aws_s3:
+           bucket: aniks
+           object: weather.csv
+           src: /home/ec2-user/Python_Scraping_project/weather.csv
+           mode: put
+           permission: public-read-write
+
                
       # - name: Launch EC2 instance
-      #   become: False
+      #   become: true
       #   ec2:
       #    key_name: awx
          
